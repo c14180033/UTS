@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <script type="text/javascript">
+        var co = 0;
+
+        $(document).on("pagebeforecreate",function(event){
+            alert("page sedang loading");
+        });
+
+        $(document).on("pageshow","#page1",function(){
+            alert("page one is now shown");
+        });
+
+        $(document).on("pageshow","#page2",function(){
+            alert("page two is now shown");
+        });
+
+        $(document).on("pagecreate",function(event){
+            alert("Selamat datang di Program Koperasi Pinjam!");
+        });
+
+        function addToTable(pinjaman, wktPinjaman, totalPengembalian){
+            var tableBody = $("table tbody");
+            var submission = "<tr><td>" + co + "</td><td>" + pinjaman + "</td><td>" + wktPinjaman + "</td><td>" + totalPengembalian + "</td></tr>";
+            tableBody.append(submission);
+        }
+
+        function submitBtn() {
+            var ttlPinjaman = document.getElementById("pinjaman").value;
+            var wktPinjaman = document.getElementById("cicilan").value;
+            var ttlPengembalian = document.getElementById("pengembalian");
+            
+            if (parseInt(wktPinjaman) >= 1 ** parseInt(wktPinjaman) <= 6) {
+                var persentase = 2/100;
+                var temp = parseInt(ttlPinjaman) * persentase * parseInt(wktPinjaman);
+                var result = parseInt(ttlPinjaman) + temp;
+                ttlPengembalian.value = result
+            }
+            else if (parseInt(wktPinjaman) >= 7 && parseInt(wktPinjaman) <= 12) {
+                var persentase = 1.5/100;
+                var temp = parseInt(ttlPinjaman) * persentase * parseInt(wktPinjaman);
+                var result = parseInt(ttlPinjaman) + temp;
+                ttlPengembalian.value = result
+            }
+            else if (parseInt(wktPinjaman) > 12) {
+                var persentase = 1/100;
+                var temp = parseInt(ttlPinjaman) * persentase * parseInt(wktPinjaman);
+                var result = parseInt(ttlPinjaman) + temp;
+                ttlPengembalian.value = result
+            }
+            co = co + 1;
+            addToTable(ttlPinjaman, wktPinjaman, result);
+        }
+
+    </script>
+</head>
+<body>
+    <div data-role="page" id="page1">
+        <div data-role="header">
+            <h1> Halaman 1 </h1>
+            <div data-role="navbar">  
+                <ul>
+                    <li> <a href="#page1"> Page 1 </a> </li>
+                    <li> <a href="#page2"> Page 2 </a> </li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="main" class="ui-content">
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label> Total Pinjaman: </label>
+                    <input type="text" id="pinjaman">
+                </div>
+                <div class="ui-block-b">
+                    <label> Waktu pinjaman(cicilan): </label>
+                    <input type="text" id="cicilan">
+                </div>
+            </div>
+            <button onclick="submitBtn()"> Submit </button>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label>Total pengembalian: </label>
+                    <textarea cols="40" rows="1" name="textarea" id="pengembalian">  </textarea>
+                </div>
+            </div>
+            <button id="showTable"> Tampilkan Tabel Cicilan </button>
+        </div>
+    </div>
+
+    <div data-role="page" id="page2">
+        <div data-role="header">
+            <h1> Halaman 2 </h1>
+            <div data-role="navbar">  
+                <ul>
+                    <li> <a href="#page1"> Page 1 </a> </li>
+                    <li> <a href="#page2"> Page 2 </a> </li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="main" class="ui-content">
+            <h2>List Detail Cicilan </h1>
+                <div data-role="content">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Pinjaman</th>
+                                <th>Waktu Pinjaman</th>
+                                <th>Total Pengembalian</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
